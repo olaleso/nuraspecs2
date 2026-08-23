@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 242 56" role="img" aria-labelledby="title desc">
+  <title id="title">Nuraspecs Solutions</title>
+  <desc id="desc">Nuraspecs Solutions wordmark with a blue, cyan and green folded N symbol.</desc>
+  <defs>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0C8DF4"/><stop offset="1" stop-color="#0649B6"/></linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#B1E945"/><stop offset="1" stop-color="#65C94E"/></linearGradient>
+  </defs>
+  <g transform="translate(2 4)">
+    <path d="M7 38V10c0-4.6 5.5-7 8.8-3.8L29 19.3 16.1 32.2V38A4.55 4.55 0 0 1 7 38Z" fill="url(#blue)"/>
+    <path d="M14.7 6.6 31 22.9c1.8 1.8 4.7 1.8 6.5 0L45.3 15v13.2L39.5 34c-4.7 4.7-12.3 4.7-17 0L7.9 19.4V10c0-4 4.9-6 7.8-3.4Z" fill="#11A8D8"/>
+    <path d="M46 7.2c0-2.6 2.1-4.7 4.7-4.7s4.7 2.1 4.7 4.7v22.6c0 2.2-1.1 4.3-2.9 5.6L41.6 43c-3.5 2.4-8.2-.1-8.2-4.3v-5.2l9.4-7c2-1.5 3.2-3.8 3.2-6.3V7.2Z" fill="url(#green)"/>
+  </g>
+  <g fill="#0A2453" font-family="Inter,Segoe UI,Arial,sans-serif">
+    <text x="70" y="25" font-size="20" font-weight="850" letter-spacing=".45">NURASPECS</text>
+    <text x="71" y="43" font-size="10" font-weight="750" letter-spacing="3.25">SOLUTIONS</text>
+  </g>
+</svg>
