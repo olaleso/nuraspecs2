@@ -137,7 +137,7 @@ Before the final public launch:
 - add real social links when accounts are created
 - add real customer testimonials/case studies only with permission
 - add actual pricing only after the commercial model is finalised
-- Deployment test
+- Deployment test 2
 
 ## No invented claims
 
