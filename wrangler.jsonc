@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nuraspecs",
+  "compatibility_date": "2026-08-29",
+  "main": "./worker.js",
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "send_email": [
+    {
+      "name": "CONTACT_EMAIL",
+      "destination_address": "ibrahimsowunmi@gmail.com"
+    }
+  ]
+}

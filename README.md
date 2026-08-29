@@ -137,8 +137,22 @@ Before the final public launch:
 - add real social links when accounts are created
 - add real customer testimonials/case studies only with permission
 - add actual pricing only after the commercial model is finalised
-- Deployment test 2
 
 ## No invented claims
 
 The interface illustrations contain clearly labelled **demo data**. The website intentionally avoids fabricated customer numbers, uptime claims, testimonials, awards or public pricing.
+
+
+## Contact form backend (Cloudflare Worker)
+
+The contact form now submits to `/api/contact`. The Worker is defined in `worker.js` and configured by `wrangler.jsonc`.
+
+Before deploying:
+
+1. In Cloudflare, onboard `nuraspecs.com` for **Email Sending** under **Email Service → Email Sending**. Email Routing alone handles inbound forwarding; the Worker needs Email Sending enabled to send the form notification.
+2. Keep `ibrahimsowunmi@gmail.com` verified as a destination address.
+3. The Worker sends from `website@nuraspecs.com` and sets the visitor's email as Reply-To.
+4. Commit these files to the `main` branch. The existing Cloudflare Git integration should run `npx wrangler deploy` automatically.
+5. Test the form at `https://nuraspecs.com/contact.html`.
+
+The endpoint validates required fields, checks email format, caps field lengths and includes a honeypot anti-bot field. Cloudflare Turnstile can be added later if spam becomes a problem.

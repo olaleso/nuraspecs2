@@ -441,3 +441,12 @@ button { cursor: pointer; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-brand, .footer-grid > div:last-child { grid-column: auto; }
 }
+
+
+/* Contact form submission feedback */
+.form-status { display:none; margin:0 0 18px; padding:12px 14px; border-radius:10px; font-size:.95rem; }
+.form-status:not(:empty) { display:block; background:#eef6ff; color:#174d83; border:1px solid #cfe5fb; }
+.form-status.success { background:#ecfdf3; color:#17603a; border-color:#b8ebcc; }
+.form-status.error { background:#fff2f2; color:#9e2c2c; border-color:#f2c4c4; }
+.contact-form button[disabled] { opacity:.7; cursor:wait; }
+.hp-field { position:absolute !important; left:-10000px !important; width:1px !important; height:1px !important; overflow:hidden !important; }

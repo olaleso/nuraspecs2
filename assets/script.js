@@ -59,20 +59,42 @@ if (interestSelect && intent) {
 
 const contactForm = document.querySelector('#contact-form');
 if (contactForm) {
-  contactForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const data = new FormData(contactForm);
-    const subject = encodeURIComponent(`Nuraspecs website enquiry: ${data.get('interest')}`);
-    const body = encodeURIComponent(
-`Name: ${data.get('name')}
-Organisation / School: ${data.get('company') || 'Not provided'}
-Email: ${data.get('email')}
-Phone: ${data.get('phone') || 'Not provided'}
-Interest: ${data.get('interest')}
+  const formStatus = document.querySelector('#form-status');
+  const submitButton = document.querySelector('#contact-submit');
 
-Message:
-${data.get('message')}`
-    );
-    window.location.href = `mailto:info@nuraspecs.com?subject=${subject}&body=${body}`;
+  contactForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    if (!contactForm.reportValidity()) return;
+
+    const data = new FormData(contactForm);
+    const payload = Object.fromEntries(data.entries());
+
+    formStatus.className = 'form-status';
+    formStatus.textContent = 'Sending your message…';
+    submitButton.disabled = true;
+    submitButton.setAttribute('aria-busy', 'true');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || 'We could not send your message. Please try again.');
+
+      formStatus.className = 'form-status success';
+      formStatus.textContent = 'Thank you. Your message has been sent successfully. We’ll get back to you shortly.';
+      contactForm.reset();
+      if (interestSelect && intent && mapping[intent]) interestSelect.value = mapping[intent];
+    } catch (error) {
+      formStatus.className = 'form-status error';
+      formStatus.textContent = error.message || 'We could not send your message. Please email info@nuraspecs.com or try again later.';
+    } finally {
+      submitButton.disabled = false;
+      submitButton.removeAttribute('aria-busy');
+    }
   });
 }
