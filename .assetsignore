@@ -1,0 +1,9 @@
+# Deployment/runtime files that must not be published as static assets
+.git
+.git/**
+.wrangler
+.wrangler/**
+worker.js
+wrangler.jsonc
+README.md
+*.ps1

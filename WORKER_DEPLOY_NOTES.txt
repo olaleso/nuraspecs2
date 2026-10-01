@@ -1,0 +1,6 @@
+NuraSpecs cinematic static assets — Worker-ready
+
+Designed for the existing olaleso/nuraspecs2 Worker deployment.
+Keep the repository's existing worker.js and wrangler.jsonc.
+Copy these files into the repository root, commit, and push to the configured production branch.
+The contact form posts to /api/contact and therefore reuses the existing Worker email handler.
