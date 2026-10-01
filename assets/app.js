@@ -6,6 +6,12 @@
   const ngn = new Intl.NumberFormat('en-NG', {style:'currency',currency:'NGN',maximumFractionDigits:0});
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Mark the current page for assistive technology and clearer navigation state.
+  const currentPath = location.pathname.replace(/\/index\.html$/, '/');
+  $$('a[href]').forEach(a => {
+    try { const u = new URL(a.href, location.href); const p = u.pathname.replace(/\/index\.html$/, '/'); if (u.origin === location.origin && p === currentPath) a.setAttribute('aria-current','page'); } catch {}
+  });
+
   // Navigation, keyboard-friendly mobile menu and scroll state.
   const nav = $('.topnav');
   const toggle = $('#menu-toggle');

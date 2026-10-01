@@ -1,4 +1,6 @@
 # Preserve established inbound links from the previous site.
 /school-management.html /products/school-management.html 301
 /products.html /products/nuraspecs-one.html 302
+/products /products/nuraspecs-one.html 302
 /insights.html /about.html 302
+/blog.html /about.html 302
