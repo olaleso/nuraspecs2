@@ -20,3 +20,87 @@
 .compact-section{padding-top:34px;padding-bottom:34px;background:#f7f9fd}.product-status-panel{padding:28px 30px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:center}.product-status-panel h2{font-size:clamp(1.55rem,2.6vw,2.2rem);margin:12px 0 8px}.product-status-panel p{margin:0;color:#5d6e86;max-width:850px;line-height:1.7}.product-status-panel .actions{justify-content:flex-end;margin:0;min-width:max-content}
 .demo-status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0 26px}.demo-status-card{padding:20px 22px}.demo-status-card p{margin:9px 0 0;color:#63748b;line-height:1.6;font-size:.94rem}
 @media (max-width:860px){.status-grid,.demo-status-grid{grid-template-columns:1fr}.product-status-panel{grid-template-columns:1fr}.product-status-panel .actions{justify-content:flex-start;min-width:0}.status-card{padding:25px}}
+/* v5.1 fix: keep NuraSpecs One product copy and screenshot in separate layout columns */
+.product-tile.enterprise{
+  display:grid;
+  grid-template-columns:minmax(0,.86fr) minmax(280px,1.14fr);
+  grid-template-rows:1fr auto;
+  column-gap:28px;
+  align-items:center;
+}
+
+.product-tile.enterprise .tile-head{
+  grid-column:1;
+  grid-row:1;
+  align-self:start;
+  max-width:100%;
+  min-width:0;
+}
+
+.product-tile.enterprise .tile-head p{
+  max-width:100%;
+}
+
+.product-tile.enterprise .tile-media{
+  grid-column:2;
+  grid-row:1 / 3;
+  height:auto;
+  min-height:280px;
+  margin:0;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  min-width:0;
+}
+
+.product-tile.enterprise .tile-media img{
+  position:relative;
+  inset:auto;
+  bottom:auto;
+  right:auto;
+  width:100%;
+  max-width:520px;
+  margin:0;
+  transform:rotate(-2deg);
+}
+
+.product-tile.enterprise .tile-actions{
+  grid-column:1;
+  grid-row:2;
+  align-self:end;
+}
+
+@media(max-width:1100px){
+  .product-tile.enterprise{
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto auto;
+    row-gap:18px;
+  }
+
+  .product-tile.enterprise .tile-head,
+  .product-tile.enterprise .tile-media,
+  .product-tile.enterprise .tile-actions{
+    grid-column:1;
+    grid-row:auto;
+  }
+
+  .product-tile.enterprise .tile-media{
+    min-height:220px;
+    justify-content:center;
+  }
+
+  .product-tile.enterprise .tile-media img{
+    width:min(92%,560px);
+  }
+}
+
+@media(max-width:650px){
+  .product-tile.enterprise .tile-media{
+    min-height:190px;
+  }
+
+  .product-tile.enterprise .tile-media img{
+    width:100%;
+    transform:none;
+  }
+}
