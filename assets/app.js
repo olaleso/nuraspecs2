@@ -6,6 +6,13 @@
   const ngn = new Intl.NumberFormat('en-NG', {style:'currency',currency:'NGN',maximumFractionDigits:0});
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+
+  // Preserve paid-campaign attribution across same-site navigation without third-party tracking.
+  const campaignKeys=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid'];
+  const incoming=new URLSearchParams(location.search);
+  campaignKeys.forEach(key=>{const value=incoming.get(key);if(value){try{sessionStorage.setItem('nuraspecs_'+key,value.slice(0,180));}catch{}}});
+  const campaignSummary=()=>campaignKeys.map(key=>{try{return [key,sessionStorage.getItem('nuraspecs_'+key)];}catch{return [key,null];}}).filter(([,v])=>v).map(([k,v])=>`${k}: ${v}`).join('\n');
+
   // Mark the current page for assistive technology and clearer navigation state.
   const currentPath = location.pathname.replace(/\/index\.html$/, '/');
   $$('a[href]').forEach(a => {
@@ -60,7 +67,7 @@
   const studio=$('#home-demo-studio');
   if(studio){
     const entries={
-      one:{title:'Follow an approval from request to decision.',desc:'Explore the NuraSpecs One product vision using sample Nigerian naira amounts and an interactive approval flow.',img:'assets/one-dashboard.png',alt:'NuraSpecs One dashboard prototype, showing illustrative procurement and approval metrics',href:'demo.html?product=one',label:'Explore the One preview'},
+      one:{title:'Follow an approval from request to decision.',desc:'Explore NuraSpecs One using sample Nigerian naira amounts and an interactive approval flow.',img:'assets/one-dashboard.png',alt:'NuraSpecs One dashboard using illustrative procurement and approval metrics',href:'demo.html?product=one',label:'Explore NuraSpecs One'},
       school:{title:'Experience a more connected school day.',desc:'Try an illustrative walk-through of student records, attendance and Nigerian naira fee tracking.',img:null,href:'demo.html?product=school',label:'Explore the school demo'}
     };
     const tabs=$$('[data-studio]',studio),img=$('#studio-image'),school=$('#studio-school');
@@ -76,7 +83,7 @@
   // Product gallery for the real NuraSpecs One frontend screenshots.
   const gallery=$('#one-gallery');
   if(gallery){const image=$('img',gallery),caption=$('#gallery-caption');
-    const sources={dashboard:{src:'../assets/one-dashboard.png',alt:'NuraSpecs One NGN executive dashboard frontend prototype',caption:'Executive dashboard — illustrative NGN figures'},requests:{src:'../assets/one-requests.png',alt:'NuraSpecs One procurement request listing prototype',caption:'Procurement requests — illustrative records'},currency:{src:'../assets/currency-settings.png',alt:'NuraSpecs One configuration page for currency selection',caption:'Organisation currency settings — configuration prototype'}};
+    const sources={dashboard:{src:'../assets/one-dashboard.png',alt:'NuraSpecs One NGN executive dashboard product interface',caption:'Executive dashboard — illustrative NGN figures'},requests:{src:'../assets/one-requests.png',alt:'NuraSpecs One procurement request listing using illustrative records',caption:'Procurement requests — illustrative records'},currency:{src:'../assets/currency-settings.png',alt:'NuraSpecs One configuration page for currency selection',caption:'Organisation currency settings — configuration screen'}};
     $$('[data-screen]').forEach(b=>b.addEventListener('click',()=>{const s=sources[b.dataset.screen];image.src=s.src;image.alt=s.alt;caption.textContent=s.caption;$$('[data-screen]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-selected',String(x===b));});}));
   }
 
@@ -134,9 +141,10 @@
       try{
         const country=String(d.get('country')||'').trim();
         const message=String(d.get('message')||'').trim();
+        const campaign=campaignSummary();
         const response=await fetch('/api/contact',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({
           name:d.get('name'),email:d.get('email'),company:d.get('company'),phone:d.get('phone'),interest:product,
-          message:country?`Country: ${country}\n\n${message}`:message,website:''
+          message:`${country?`Country: ${country}\n\n`:''}${message}${campaign?`\n\nCampaign attribution\n${campaign}`:''}`,website:''
         })});
         let payload={};try{payload=await response.json();}catch{}
         if(!response.ok)throw new Error(payload.error||'Unable to send your enquiry.');
